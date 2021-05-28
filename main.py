@@ -10,7 +10,7 @@ from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.python.keras.backend import dropout
 
 # Load Data
-company = "FB"
+company = input("Enter ticker: ")
 
 start = dt.datetime(2012,1,1)
 end = dt.datetime(2020,1,1)
@@ -56,7 +56,7 @@ actual_prices = test_data['Close'].values
 
 total_dataset = pd.concat((data['Close'], test_data['Close']), axis=0)
 
-model_inputs = total_dataset[len(total_dataset) - len(test_data) - prediction_days].value
+model_inputs = total_dataset[len(total_dataset) - len(test_data) - prediction_days:].values
 model_inputs = model_inputs.reshape(-1, 1)
 model_inputs = scaler.transform(model_inputs)
 
@@ -79,3 +79,12 @@ plt.xlabel('Time')
 plt.ylabel(f'{company} Share Price')
 plt.legend()
 plt.show()
+
+real_data = [model_inputs[len(model_inputs) + 1 - prediction_days:len(model_inputs) + 1, 0]]
+real_data = np.array(real_data)
+real_data = np.reshape(real_data, (real_data.shape[0], real_data.shape[1], 1))
+print(scaler.inverse_transform(real_data[-1]))
+
+prediction = model.predict(real_data)
+prediction = scaler.inverse_transform(prediction)
+print(f"Prediction: {prediction}")

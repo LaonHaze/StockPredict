@@ -1,0 +1,2 @@
+# StockPredict
+Stock Prediction algorithm

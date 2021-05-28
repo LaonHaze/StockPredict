@@ -5,6 +5,12 @@ name = "pypi"
 
 [packages]
 numpy = "*"
+pandas-datareader = "*"
+sklearn = "*"
+matplotlib = "*"
+tensorflow = "*"
+pandas = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
